@@ -20,9 +20,14 @@ class App extends React.Component {
   dealCards = () => {
     // this.state.cardDeck.pop() modifies this.state.cardDeck array
     const newCurrCards = [this.state.cardDeck.pop(), this.state.cardDeck.pop()];
-    this.setState({
-      currCards: newCurrCards,
-    });
+    this.setState(
+      {
+        currCards: newCurrCards,
+      },
+      () => {
+        this.checkWin();
+      }
+    );
   };
 
   checkWin = () => {
