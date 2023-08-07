@@ -60,6 +60,12 @@ class App extends React.Component {
           <h3>High Card 🚀</h3>
           {currCardElems}
           <br />
+          {this.state.currWinner}
+          <br />
+          Player One has won {this.state.playerOneWinCount} rounds in this game.
+          <br />
+          Player Two has won {this.state.playerTwoWinCount} rounds in this game.
+          <br />
           <button onClick={this.dealCards}>Deal</button>
         </header>
       </div>
