@@ -28,6 +28,7 @@ class App extends React.Component {
         this.checkWin();
       }
     );
+    console.log(this.state.cardDeck.length);
   };
 
   checkWin = () => {
@@ -48,6 +49,16 @@ class App extends React.Component {
     }
   };
 
+  restartGame = () => {
+    this.setState({
+      cardDeck: makeShuffledDeck(),
+      currCards: [],
+      currWinner: "",
+      playerOneWinCount: 0,
+      playerTwoWinCount: 0,
+    });
+  };
+
   render() {
     // You can write JavaScript here, just don't try and set your state!
 
@@ -62,16 +73,56 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h3>High Card 🚀</h3>
-          {currCardElems}
+          <p>
+            <h3>High Card 🚀</h3>
+            <br />
+            {currCardElems}
+          </p>
+          <p>
+            <div>{this.state.currWinner}</div>
+          </p>
+          <p>
+            {this.state.cardDeck.length !== 52 && (
+              <div>
+                Player One has won {this.state.playerOneWinCount} rounds in this
+                game.
+              </div>
+            )}
+            {this.state.cardDeck.length !== 52 && (
+              <div>
+                Player Two has won {this.state.playerTwoWinCount} rounds in this
+                game.
+              </div>
+            )}
+          </p>
+          <p>
+            {this.state.cardDeck.length === 0 &&
+              this.state.playerOneWinCount > this.state.playerTwoWinCount && (
+                <div>
+                  Player One has won the game.
+                  <br />
+                  Click Deal to restart the game.
+                </div>
+              )}
+            {this.state.cardDeck.length === 0 &&
+              this.state.playerTwoWinCount > this.state.playerOneWinCount && (
+                <div>
+                  Player Two has won the game.
+                  <br />
+                  Click Deal to restart the game.
+                </div>
+              )}
+          </p>
           <br />
-          {this.state.currWinner}
-          <br />
-          Player One has won {this.state.playerOneWinCount} rounds in this game.
-          <br />
-          Player Two has won {this.state.playerTwoWinCount} rounds in this game.
-          <br />
-          <button onClick={this.dealCards}>Deal</button>
+          <button
+            onClick={
+              this.state.cardDeck.length === 0
+                ? this.restartGame
+                : this.dealCards
+            }
+          >
+            Deal
+          </button>
         </header>
       </div>
     );
